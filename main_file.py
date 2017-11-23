@@ -38,13 +38,41 @@ def buffer_time():
 class Human:
     def __init__(self):
         self.level = 1;
-        self.hp = 1;
-        self.mp = 1;
-        self.speed = 1;
-        self.accuracy = 1;
-        self.defence = 1;
-        self.mgkdef = 1;
-        self.luck = 1;
+        self.xp = 0;
+        self.hp = 100;
+        self.mp = 40;
+        self.strength = 8;
+        self.accuracy = 5;
+        self.defence = 8;
+        self.mgatk = 6;
+        self.mgkdef = 7;
+        self.luck = 6;
+
+class Elf:
+    def __init__(self):
+        self.level = 1;
+        self.xp = 0;
+        self.hp = 70;
+        self.mp = 70;
+        self.strength = 5;
+        self.accuracy = 9;
+        self.defence = 8;
+        self.mgatk = 8;
+        self.mgkdef = 5;
+        self.luck = 5;
+
+class Dwarf:
+    def __init__(self):
+        self.level = 1;
+        self.xp = 0;
+        self.hp = 120;
+        self.mp = 20;
+        self.strength = 12;
+        self.accuracy = 6;
+        self.defence = 10;
+        self.mgatk = 2;
+        self.mgkdef = 5;
+        self.luck = 5;        
     
 
 
