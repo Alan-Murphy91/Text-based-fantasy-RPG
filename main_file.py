@@ -1,14 +1,17 @@
 import time
 import random
-import game_functions
 from prettytable import PrettyTable
 
 
 ########################################################
 
+new_char = 1
+
 def race_select():
     race = raw_input('What race are you? (human,elf,dwarf) \n')
     if(race == 'human'):
+        global new_char
+        new_char = Human()
         return 'human'
     elif(race == 'elf'):
         return 'elf'
@@ -74,6 +77,9 @@ class Dwarf:
         self.mgkdef = 5;
         self.luck = 5;        
     
+    #knight - HP += 30, strength += 5, defence += 5
+    #mage - MP += 30, mgatk += 5, mgdef += 5
+    #thief - HP +=15, MP +=15, luck +=10
 
 
 ########################################################
@@ -108,20 +114,20 @@ dungeon_items = ['milk of the poppy', random.randint(1,100), 'rusty shield', 'ma
 
 ########################################################
 def inventory_check():
-    game_functions.buffer_time()
+    buffer_time()
     x = PrettyTable(['Item Name', 'Amount', 'Item Description'])
     for key, value in player_inventory.iteritems():
         x.add_row([key,value[0],value[1]])
     print(x)
 
 def status_check():
-    game_functions.buffer_time()
+    buffer_time()
     print('test')
 
 def dungeon_move(n,s,l):
     rand = random.randint(1,9)
     if(dungeon[(n,s,l)][0] == '2'):
-        game_functions.buffer_time()
+        buffer_time()
         if(rand <= 3):
             print('Torchlight streams in from the west')
         elif(rand >=7):
@@ -131,9 +137,9 @@ def dungeon_move(n,s,l):
             
         action = raw_input('west,examine,inventory,status \n')
         if(action == 'west'):
-            game_functions.buffer_time()
+            buffer_time()
             print('..Moving westward, torches brighten the next area\n the air is thick with rot')
-            game_functions.buffer_time()
+            buffer_time()
             return dungeon_move((n-1),s,l)
         elif(action == 'examine'):
             examine(n,s,l)
@@ -148,7 +154,7 @@ def dungeon_move(n,s,l):
             return dungeon_move(n,s,l)
 
     elif(dungeon[(n,s,l)][0] == '1'):
-        game_functions.buffer_time()
+        buffer_time()
         if(rand <= 3):
             print('To the south you hear the sound of sewers')
         elif(rand >=7):
@@ -158,14 +164,14 @@ def dungeon_move(n,s,l):
             
         action = raw_input('south,east,examine,inventory,status \n')
         if(action == 'south'):
-            game_functions.buffer_time()
+            buffer_time()
             print('..Moving southward, a cross-bridge over sewers comes into view')
-            game_functions.buffer_time()
+            buffer_time()
             return dungeon_move(n,(s+1),l)
         elif(action == 'east'):
-            game_functions.buffer_time()
+            buffer_time()
             print('..Moving eastward, the path becomes black as night but \nfor the faint flicker of light behind you')
-            game_functions.buffer_time()
+            buffer_time()
             return dungeon_move((n+1),s,l)            
         elif(action == 'examine'):
             examine(n,s,l)
@@ -231,17 +237,18 @@ time.sleep(1)
 print('...')
 time.sleep(1)
 print('...')
-race = game_functions.race_select()
-job = game_functions.class_select()
+race_select()
+class_select()
 time.sleep(1)
 print('...')
 time.sleep(1)
-final = raw_input('You are a %s and a %s. Is this correct? (y/n) \n' % (race,job))
+final = raw_input('You have chosen %s and %s. Is this correct? (y/n) \n' % (race,job))
 if (final == 'n'):
-    game_functions.race_select()
-    game_functions.class_select()
+    race_select()
+    class_select()
 
 game_functions.buffer_time()
+print(new_char)
 
 print('You awake to a dripping noise and the sound of a rat \nscurrying across the floor. A torch illuminates the rusty iron bars of \nthe cell. The door is ajar.')
 dungeon_move(1,0,1)
